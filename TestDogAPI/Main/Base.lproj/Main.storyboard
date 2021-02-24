@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Dog Breeds View Controller-->
+        <!--Breeds-->
         <scene sceneID="5Ej-VQ-odQ">
             <objects>
                 <collectionViewController id="Es3-8b-Az2" customClass="DogBreedsViewController" customModule="TestDogAPI" customModuleProvider="target" sceneMemberID="viewController">
@@ -26,7 +26,7 @@
                             <outlet property="delegate" destination="Es3-8b-Az2" id="fUf-xv-vhY"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="GMi-Ir-OEW"/>
+                    <navigationItem key="navigationItem" title="Breeds" id="GMi-Ir-OEW"/>
                     <connections>
                         <outlet property="dogBreedCollectionView" destination="Lq7-Wj-ELF" id="OPs-dO-fLp"/>
                     </connections>

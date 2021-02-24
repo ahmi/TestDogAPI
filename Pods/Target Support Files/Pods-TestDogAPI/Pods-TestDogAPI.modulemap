@@ -1,0 +1,6 @@
+framework module Pods_TestDogAPI {
+  umbrella header "Pods-TestDogAPI-umbrella.h"
+
+  export *
+  module * { export * }
+}

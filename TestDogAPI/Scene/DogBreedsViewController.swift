@@ -6,35 +6,25 @@
 //
 
 import UIKit
-
-//protocol BreedListUseCases {
-//    func fetchBreedList()
-//    func fetchBreedRandomPhoto()
-//}
-
+import JGProgressHUD
 private let reuseIdentifier = "DogBreedsCollectionViewCell"
 private let itemsPerRow: CGFloat = 2
 private let sectionInsets = UIEdgeInsets(
-    top: 20.0,
-    left: 20.0,
-    bottom: 50.0,
-    right: 20.0)
+    top: 10,
+    left: 10,
+    bottom: 10,
+    right: 10)
 
 class DogBreedsViewController: UICollectionViewController {
     
     @IBOutlet weak var dogBreedCollectionView: UICollectionView!
     let viewModel = DogsBreedViewModel()
-    private let breeds = [
-        
-        DogsBreedModel.init(message: "Affenpinscher", status: ""),
-        DogsBreedModel.init(message: "Afghan Hound", status: ""),
-        DogsBreedModel.init(message: "Aidi", status: ""),
-        DogsBreedModel.init(message: "Airedale Terrier", status: ""),
-        DogsBreedModel.init(message: "Akbash", status: "") ]
+    private var breeds = [String]()
+    private let hud = JGProgressHUD()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
         fetchDogsBreedsList()
     }
@@ -46,14 +36,15 @@ class DogBreedsViewController: UICollectionViewController {
     }
     
     private func fetchDogsBreedsList() {
+        viewModel.delegate = self
         viewModel.fetchAllBreedsList()
     }
+    
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
@@ -67,47 +58,21 @@ class DogBreedsViewController: UICollectionViewController {
         // Configure the cell
         let breed =  breeds[indexPath.row]
         cell.configure(with: breed)
-        //        cell.lblBreedTitle?.text = breeds[indexPath.row]
-        //        cell.imgBreed?.image = UIImage.init(systemName: "hare")
         return cell
     }
     
     // MARK: UICollectionViewDelegate
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView,
-                                 shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! DogBreedsCollectionViewCell
         let breed =  breeds[indexPath.row]
         cell.configure(with: breed)        
     }
-    
-    override func collectionView(_ collectionView: UICollectionView,
-                                 shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView,
-                                 canPerformAction action: Selector,
-                                 forItemAt indexPath: IndexPath,
-                                 withSender sender: Any?) -> Bool {
-        return false
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView,
-                                 performAction action: Selector,
-                                 forItemAt indexPath: IndexPath,
-                                 withSender sender: Any?) {
-        
-    }
-    
 }
 // MARK: - Collection View Flow Layout Delegate
 extension DogBreedsViewController: UICollectionViewDelegateFlowLayout {
@@ -138,5 +103,30 @@ extension DogBreedsViewController: UICollectionViewDelegateFlowLayout {
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
         return sectionInsets.left
+    }
+}
+
+extension DogBreedsViewController: BreedListPresenting {
+    
+    func loadAllBreeds(with breedList: [String]) {
+        self.breeds = breedList
+        self.dogBreedCollectionView.reloadData()
+    }
+    
+    func hideActivityIndicator(isError: Bool?) {
+        if isError ?? false {
+            hud.textLabel.text = "Error"
+            hud.indicatorView = JGProgressHUDErrorIndicatorView(contentView: self.view)
+        }
+        else {
+            hud.textLabel.text = "Success"
+            hud.indicatorView = JGProgressHUDSuccessIndicatorView(contentView: self.view)
+        }
+        hud.dismiss(afterDelay: 3.0)
+    }
+    
+    func showActivityIndicator() {
+        hud.textLabel.text = "Loading.."
+        hud.show(in: self.view)
     }
 }

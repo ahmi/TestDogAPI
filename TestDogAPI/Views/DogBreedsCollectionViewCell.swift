@@ -50,8 +50,8 @@ class DogBreedsCollectionViewCell: UICollectionViewCell {
 /// Configure cell with data
 extension DogBreedsCollectionViewCell {
     
-    public func configure(with dogBreed: DogsBreedModel?) {
-        guard let title = dogBreed?.message else { return }
+    public func configure(with dogBreed: String?) {
+        guard let title = dogBreed else { return }
         self.lblBreedTitle?.text = title
         ///Remove space, new line, tab between title and append in url to fetch images
         let cellViewModel = DogBreedCellViewModel()

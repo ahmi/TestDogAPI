@@ -8,9 +8,9 @@
 import UIKit
 
 protocol BreedListPresenting: class {
-    func loadAllBreeds(with breedList: DogsBreedListModel)
+    func loadAllBreeds(with breedList: [String])
     func showActivityIndicator()
-    func hideActivityIndicator()
+    func hideActivityIndicator(isError: Bool?)
 }
 
 class DogsBreedViewModel {
@@ -24,13 +24,15 @@ class DogsBreedViewModel {
             DispatchQueue.main.sync {
                 switch result {
                     case .success(let breedlist):
-                        self.breedsList = breedlist
-                        self.delegate?.loadAllBreeds(with: breedlist)
-                        self.delegate?.hideActivityIndicator()
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        self.delegate?.hideActivityIndicator()
-
+                        if breedlist.message?.keys.count ?? 0 < 1 {
+                            self.delegate?.hideActivityIndicator(isError: true)
+                            return
+                        }
+                        let array = [String](breedlist.message!.keys)
+                        self.delegate?.loadAllBreeds(with: array)
+                        self.delegate?.hideActivityIndicator(isError: false)
+                    case .failure:
+                        self.delegate?.hideActivityIndicator(isError: true)
                 }
             }
         }
