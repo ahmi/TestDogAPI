@@ -16,3 +16,13 @@ public struct DogsBreedModel: Codable {
         self.status = status
     }
 }
+
+public struct DogsBreedListModel: Codable, Hashable {
+    var message: Dictionary<String, [String]>?
+    var status: String?
+    
+    init(message: Dictionary<String, [String]>?, status: String?) {
+        self.message = message
+        self.status = status
+    }
+}

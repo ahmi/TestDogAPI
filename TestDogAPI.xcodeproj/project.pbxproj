@@ -22,6 +22,7 @@
 		84AEC86925E536DB008B6270 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC86825E536DB008B6270 /* UIView+Shadow.swift */; };
 		84AEC87225E5417C008B6270 /* DogBreedsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC87125E5417C008B6270 /* DogBreedsProvider.swift */; };
 		84AEC87A25E541D8008B6270 /* DogBreedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC87925E541D8008B6270 /* DogBreedAPI.swift */; };
+		84AEC88225E61F1B008B6270 /* DogBreedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC88125E61F1B008B6270 /* DogBreedCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		84AEC86825E536DB008B6270 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		84AEC87125E5417C008B6270 /* DogBreedsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedsProvider.swift; sourceTree = "<group>"; };
 		84AEC87925E541D8008B6270 /* DogBreedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedAPI.swift; sourceTree = "<group>"; };
+		84AEC88125E61F1B008B6270 /* DogBreedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				84AEC85925E4BBCB008B6270 /* DogsBreedViewModel.swift */,
+				84AEC88125E61F1B008B6270 /* DogBreedCellViewModel.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				84AEC87225E5417C008B6270 /* DogBreedsProvider.swift in Sources */,
 				84AEC7F325E39881008B6270 /* AppDelegate.swift in Sources */,
 				84AEC87A25E541D8008B6270 /* DogBreedAPI.swift in Sources */,
+				84AEC88225E61F1B008B6270 /* DogBreedCellViewModel.swift in Sources */,
 				84AEC85A25E4BBCB008B6270 /* DogsBreedViewModel.swift in Sources */,
 				84AEC83925E399C3008B6270 /* DogBreedsViewController.swift in Sources */,
 				84AEC84025E3A136008B6270 /* DogBreedsCollectionViewCell.swift in Sources */,

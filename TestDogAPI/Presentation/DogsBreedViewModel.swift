@@ -7,29 +7,32 @@
 
 import UIKit
 
-let breeds = [ DogsBreedModel.init(message: "AAAA", status: ""),
-               DogsBreedModel.init(message: "BBB", status: ""),
-               DogsBreedModel.init(message: "CCC", status: ""),
-               DogsBreedModel.init(message: "DDD", status: ""),
-               DogsBreedModel.init(message: "EEE", status: ""),
-               DogsBreedModel.init(message: "FFF", status: "")]
-
-protocol DogsBreedPresenting {
-    func fetchDogsBreedList(completion: ([DogsBreedModel], Error?) -> Void)
+protocol BreedListPresenting: class {
+    func loadAllBreeds(with breedList: DogsBreedListModel)
+    func showActivityIndicator()
+    func hideActivityIndicator()
 }
 
-class DogsBreedViewModel: DogsBreedPresenting, BreedListUseCases {
-    func fetchBreedList() {
-        print("fetchBreedList called")
-    }
+class DogsBreedViewModel {
+    var breedsList: DogsBreedListModel?
+    weak var delegate: BreedListPresenting?
     
-    func fetchBreedRandomPhoto() {
-        print("fetchBreedRandomPhoto called")
+    func fetchAllBreedsList() {
+        self.delegate?.showActivityIndicator()
+        let api = DogBreedsApi()
+        api.fetchAllBreedsNameList { (result) in
+            DispatchQueue.main.sync {
+                switch result {
+                    case .success(let breedlist):
+                        self.breedsList = breedlist
+                        self.delegate?.loadAllBreeds(with: breedlist)
+                        self.delegate?.hideActivityIndicator()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        self.delegate?.hideActivityIndicator()
+
+                }
+            }
+        }
     }
-    
-    var delegate: DogsBreedPresenting?
-    func fetchDogsBreedList(completion: ([DogsBreedModel], Error?) -> Void) {
-        completion(breeds, nil)
-    }
-    
 }

@@ -46,36 +46,6 @@ class DogBreedsCollectionViewCell: UICollectionViewCell {
         containerView.addShadow(offset: CGSize.init(width: 0, height: 2), color: .black, radius: 2.0, opacity: 0.4)
     }
 }
-/// Fetch random breed object
-extension DogBreedsCollectionViewCell {
-
-  private  func fetchBreedRandomImageObject(url: String, completion: @escaping (Result<DogsBreedModel, APIError>) -> Void)  {
-        guard let url = URL(string: url) else {
-            completion(.failure(.internalError))
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
-        let dataTask  = URLSession.shared.dataTask(with: request) { (data, _, error) in
-            guard error == nil else {
-                completion(Result.failure(.serverError)) //we can  exempt Result and simply use .failure
-                return
-            }
-            guard let data = data else {
-                completion(Result.failure(.serverError))
-                return
-            }
-            do {
-                let object = try JSONDecoder().decode(DogsBreedModel.self, from: data)
-                completion(.success(object ))
-            } catch {
-                completion(.failure(.parsingError))
-            }
-        }
-        dataTask.resume()
-    }
-}
 
 /// Configure cell with data
 extension DogBreedsCollectionViewCell {
@@ -84,8 +54,8 @@ extension DogBreedsCollectionViewCell {
         guard let title = dogBreed?.message else { return }
         self.lblBreedTitle?.text = title
         ///Remove space, new line, tab between title and append in url to fetch images
-        let api = DogBreedsApi()
-        api.fetchRandomBreedImageObject { (result) in
+        let cellViewModel = DogBreedCellViewModel()
+        cellViewModel.fetchSingleImage { (result) in
             switch result {
                 case .success(let breed): do {
                     DispatchQueue.main.async {

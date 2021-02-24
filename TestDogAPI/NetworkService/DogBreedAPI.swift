@@ -8,15 +8,11 @@
 import Foundation
 
 public class DogBreedsApi: DogBreedsProvider {
-    public func fetchAllBreedsNameList(completion: @escaping ((Result<DogsBreedModel, APIError>) -> Void)) {
-        
-    }
     
-    //https://dog.ceo/api/breeds/list/all
     private let baseURL = "https://dog.ceo/api"
     private enum Endpoint: String {
         case random = "/breeds/image/random"
-        case allBreeds = "/list/all"
+        case allBreeds = "/breeds/list/all"
     }
     private enum Method: String {
         case GET
@@ -24,11 +20,19 @@ public class DogBreedsApi: DogBreedsProvider {
     
     public init() {}
     
-    // MARK: Traditional
+ // MARK:- App Usecases Protocols
     
     public func fetchRandomBreedImageObject(completion: @escaping((Result<DogsBreedModel, APIError>) -> Void)) {
         request(endpoint: .random, method: .GET, completion: completion)
     }
+    
+    public func fetchAllBreedsNameList(completion: @escaping ((Result<DogsBreedListModel, APIError>) -> Void)) {
+        request(endpoint: .allBreeds, method: .GET, completion: completion)
+    }
+    
+    
+    // MARK:Fetch Single Object
+    /// These Network functions can be used for all kinds of APIs/Endpoints which return  single object
     
     private func request<T: Codable>(endpoint: Endpoint, method: Method,
                                      completion: @escaping((Result<T, APIError>) -> Void)) {
