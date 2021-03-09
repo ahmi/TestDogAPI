@@ -18,10 +18,10 @@ public struct DogsBreedModel: Codable {
 }
 
 public struct DogsBreedListModel: Codable, Hashable {
-    var message: Dictionary<String, [String]>?
+    var message: [String: [String]]?
     var status: String?
     
-    init(message: Dictionary<String, [String]>?, status: String?) {
+    init(message: [String: [String]]?, status: String?) {
         self.message = message
         self.status = status
     }
