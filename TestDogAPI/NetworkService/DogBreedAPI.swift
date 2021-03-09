@@ -19,9 +19,7 @@ public class DogBreedsApi: DogBreedsProvider {
     }
     
     public init() {}
-    
- // MARK:- App Usecases Protocols
-    
+    // MARK: App Usecases Protocols
     public func fetchRandomBreedImageObject(completion: @escaping((Result<DogsBreedModel, APIError>) -> Void)) {
         request(endpoint: .random, method: .GET, completion: completion)
     }
@@ -29,9 +27,8 @@ public class DogBreedsApi: DogBreedsProvider {
     public func fetchAllBreedsNameList(completion: @escaping ((Result<DogsBreedListModel, APIError>) -> Void)) {
         request(endpoint: .allBreeds, method: .GET, completion: completion)
     }
-    
-    
-    // MARK:Fetch Single Object
+ 
+ // MARK: Fetch Single Object
     /// These Network functions can be used for all kinds of APIs/Endpoints which return  single object
     
     private func request<T: Codable>(endpoint: Endpoint, method: Method,
@@ -49,7 +46,7 @@ public class DogBreedsApi: DogBreedsProvider {
     
     private func call<T: Codable>(with request: URLRequest,
                                   completion: @escaping((Result<T, APIError>) -> Void)) {
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
             guard error == nil
             else { completion(.failure(.serverError)); return }
             do {
