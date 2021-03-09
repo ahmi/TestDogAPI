@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,7 @@
 		84AEC87A25E541D8008B6270 /* DogBreedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC87925E541D8008B6270 /* DogBreedAPI.swift */; };
 		84AEC88225E61F1B008B6270 /* DogBreedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEC88125E61F1B008B6270 /* DogBreedCellViewModel.swift */; };
 		84AEC88A25E646E6008B6270 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 84AEC88925E646E5008B6270 /* Podfile */; };
+		84AEC89D25E7A541008B6270 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 84AEC89C25E7A541008B6270 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +74,8 @@
 		84AEC87125E5417C008B6270 /* DogBreedsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedsProvider.swift; sourceTree = "<group>"; };
 		84AEC87925E541D8008B6270 /* DogBreedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedAPI.swift; sourceTree = "<group>"; };
 		84AEC88125E61F1B008B6270 /* DogBreedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedCellViewModel.swift; sourceTree = "<group>"; };
-		84AEC88925E646E5008B6270 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		84AEC88925E646E5008B6270 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		84AEC89C25E7A541008B6270 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9CE24C35A33534FA286DCAF8 /* Pods-TestDogAPI-TestDogAPIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDogAPI-TestDogAPIUITests.release.xcconfig"; path = "Target Support Files/Pods-TestDogAPI-TestDogAPIUITests/Pods-TestDogAPI-TestDogAPIUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A852A09D943BC39E9BDA8A3F /* Pods_TestDogAPI_TestDogAPIUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDogAPI_TestDogAPIUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC8D5461BFB8564A93C4F47 /* Pods-TestDogAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDogAPI.debug.xcconfig"; path = "Target Support Files/Pods-TestDogAPI/Pods-TestDogAPI.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		84AEC7E625E39880008B6270 = {
 			isa = PBXGroup;
 			children = (
+				84AEC89C25E7A541008B6270 /* .swiftlint.yml */,
 				84AEC88925E646E5008B6270 /* Podfile */,
 				84AEC7F125E39881008B6270 /* TestDogAPI */,
 				84AEC80825E39885008B6270 /* TestDogAPITests */,
@@ -248,7 +251,6 @@
 				F993C767B7F57CAE9F46A3DC /* Pods-TestDogAPITests.debug.xcconfig */,
 				25990BA33D21420E4DF343F9 /* Pods-TestDogAPITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -264,6 +266,7 @@
 				84AEC7EC25E39881008B6270 /* Frameworks */,
 				84AEC7ED25E39881008B6270 /* Resources */,
 				0DEC2A6A464FBD7B798B1DF6 /* [CP] Embed Pods Frameworks */,
+				84AEC89825E7A408008B6270 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -360,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84AEC89D25E7A541008B6270 /* .swiftlint.yml in Resources */,
 				84AEC88A25E646E6008B6270 /* Podfile in Resources */,
 				84AEC7FF25E39885008B6270 /* LaunchScreen.storyboard in Resources */,
 				84AEC7FC25E39885008B6270 /* Assets.xcassets in Resources */,
@@ -440,6 +444,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDogAPI-TestDogAPIUITests/Pods-TestDogAPI-TestDogAPIUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		84AEC89825E7A408008B6270 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		A61F9AF12E714D6CCFD92F94 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
