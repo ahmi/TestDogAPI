@@ -18,7 +18,7 @@ class DogBreedsCollectionViewCell: UICollectionViewCell {
         didSet {
             guard let url = URL(string: imageURL!) else { return }
             print(url)
-            URLSession.shared.dataTask(with: url){(data, resp, err) in
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
                 if err != nil { return }
                 do {
                     if let data = data {
@@ -27,15 +27,14 @@ class DogBreedsCollectionViewCell: UICollectionViewCell {
                             self.imgBreed?.image = img
                             self.imgBreed?.contentMode = .scaleAspectFit
                         }
-                    }
-                    else {
+                    } else {
                         print("error in downlaoding image")
                     }
                 }
             }.resume()
         }
     }
-    //MARK:- Funtionts
+ // MARK: Funtionts
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -57,12 +56,12 @@ extension DogBreedsCollectionViewCell {
         let cellViewModel = DogBreedCellViewModel()
         cellViewModel.fetchSingleImage { (result) in
             switch result {
-                case .success(let breed): do {
-                    DispatchQueue.main.async {
-                        self.imageURL = breed.message
-                    }
+            case .success(let breed): do {
+                DispatchQueue.main.async {
+                    self.imageURL = breed.message
                 }
-                case .failure(_): break
+            }
+            case .failure(_): break
                 //ignore failure case
             }
         }
