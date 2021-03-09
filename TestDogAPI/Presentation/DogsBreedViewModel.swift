@@ -16,23 +16,26 @@ protocol BreedListPresenting: class {
 class DogsBreedViewModel {
     var breedsList: DogsBreedListModel?
     weak var delegate: BreedListPresenting?
+    var breedProvider: DogBreedsProvider?
     
+    init(breedProvider: DogBreedsProvider ) {
+        self.breedProvider = breedProvider
+    }
     func fetchAllBreedsList() {
         self.delegate?.showActivityIndicator()
-        let api = DogBreedsApi()
-        api.fetchAllBreedsNameList { (result) in
+        self.breedProvider?.fetchAllBreedsNameList { (result) in
             DispatchQueue.main.sync {
                 switch result {
-                    case .success(let breedlist):
-                        if breedlist.message?.keys.count ?? 0 < 1 {
-                            self.delegate?.hideActivityIndicator(isError: true)
-                            return
-                        }
-                        let array = [String](breedlist.message!.keys)
-                        self.delegate?.loadAllBreeds(with: array)
-                        self.delegate?.hideActivityIndicator(isError: false)
-                    case .failure:
+                case .success(let breedlist):
+                    if breedlist.message?.keys.count ?? 0 < 1 {
                         self.delegate?.hideActivityIndicator(isError: true)
+                        return
+                    }
+                    let array = [String](breedlist.message!.keys)
+                    self.delegate?.loadAllBreeds(with: array)
+                    self.delegate?.hideActivityIndicator(isError: false)
+                case .failure:
+                    self.delegate?.hideActivityIndicator(isError: true)
                 }
             }
         }
